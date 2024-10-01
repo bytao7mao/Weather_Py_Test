@@ -10,7 +10,7 @@ from email.mime.text import MIMEText
 API_KEY = '48ebea5a0b5c48637b05be3e27ea0d91'
 EMAIL_ADDRESS = 'marius.tao@gmail.com'
 EMAIL_PASSWORD = 'Blader888_steelseries'
-RECIPIENT_EMAIL = 'marius.tao@gmail.com'
+RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com'
 LOCATION = 'BUCHAREST'
 PORT = 465
 
@@ -33,7 +33,7 @@ gmailAppPassword = 'iall iibf afeg jrkr'
 #
 def send_email(city, degrees):
     message = MIMEMultipart("alternative")
-    message["Subject"] = "weather news from tao !"
+    message["Subject"] = "Weather news from tao !"
     message["From"] = EMAIL_ADDRESS
     message["To"] = RECIPIENT_EMAIL
 
@@ -52,19 +52,19 @@ def send_email(city, degrees):
            has great profile.
         </p>
         <p>Hi,<br>
-           In {city} The Weather is: {degrees}
+           In {city} The Weather is: {degrees} '°C'
         </p>
       </body>
     </html>
     """
 
     # Turn these into plain/html MIMEText objects
-    part1 = MIMEText(text, "plain")
+    # part1 = MIMEText(text, "plain")
     part2 = MIMEText(html, "html")
 
     # Add HTML/plain-text parts to MIMEMultipart message
     # The email client will try to render the last part first
-    message.attach(part1)
+    # message.attach(part1)
     message.attach(part2)
     context = ssl.create_default_context()
 
@@ -93,7 +93,8 @@ def main():
     pressure = data['main']['pressure']
     wind = data['wind']['speed']
     description = data['weather'][0]['description']
-    temp = data['main']['temp']
+    # temp: int = data['main']['temp']
+    temp = int(data['main']['temp'])
 
     print('Temperature:', temp, '°C')
     print('Wind:', wind)
