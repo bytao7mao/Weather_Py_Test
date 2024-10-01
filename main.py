@@ -47,11 +47,6 @@ def send_email(city, degrees):
     <html>
       <body>
         <p>Hi,<br>
-           How are you?<br>
-           <a href="https://www.linkedin.com/in/nicolae-marius-37b344144/">Linkedin Profile</a> 
-           has great profile.
-        </p>
-        <p>Hi,<br>
            In {city} The Weather is: {degrees} '°C'
         </p>
       </body>
