@@ -1,0 +1,259 @@
+
+Skip to:
+
+    Top Bar
+    Sidebar
+    Main Content
+
+Jira homepage
+9+
+3+
+
+Starred
+
+Starred
+
+Recent
+Back
+
+SUP-20601
+JSON source does not behave as documented in documentation
+Thomas Øderud
+raised this request
+via
+Portal
+View request in portal
+Description
+
+Using the attached file (this is a response from an api) and trying to get one row per employment (and adding personId from higher level) gives only empty results. 
+
+Name of data array is set til employments and fields set as per documentain (ex: root.personId, allocationPercentage)
+Version
+5.5.8.8
+Attachments
+2
+json_plan.png
+json_plan.png
+5 days ago
+employments.csv
+7 days ago
+Activity
+Add internal note
+Reply to customer
+
+Hi ​@Thomas Øderud​, since we were not able to synchronize, please send me an invitation to nicolae@corporater.com with a time that works best for you?
+
+Thank you!
+Marius Nicolae 
+October 14, 2025 at 8:58 AM
+
+Sent you an invitation
+
+Join the meeting now
+
+Meeting ID: 395 006 817 753 4
+
+Passcode: DV923aG9
+Thomas Øderud 
+October 14, 2025 at 8:07 AM
+
+Anytime after 12:00 is good. 
+
+//Thomas 
+
+Fra: Marius Nicolae <support@corporater.atlassian.net> 
+Sendt: mandag 13. oktober 2025 15:26
+Til: Thomas Øderud <Thomas.Oderud@kristiansand.kommune.no>
+Emne: 
+
+ JSON source does not behave as documented in documentation   
+
+—-—-—-—    
+
+Reply above this line.   
+
+Issue id : 
+
+ - JSON source does not behave as documented in documentation 
+
+Marius Nicolae replied : 
+
+Let’s schedule a meeting to get a better understanding of the issue, what time would work best for you ? 
+
+Issue description : Using the attached file (this is a response from an api) and trying to get one row per employment (and adding personId from higher level) gives only empty results. 
+
+Name of data array is set til employments and fields set as per documentain (ex: root.personId, allocationPercentage) 
+
+Kind
+Marius Nicolae 
+October 13, 2025 at 3:24 PM
+
+Let’s schedule a meeting to get a better understanding of the issue, what time would work best for you ? 
+Thomas Øderud 
+October 13, 2025 at 11:52 AM
+
+Hi.
+
+This does hovever not work in config studio on a JSON source. Did you test this yourself? If so, a screenshot would be helpful.
+
+ 
+
+//Thomas
+Marius Nicolae 
+October 9, 2025 at 2:30 PM
+
+Hi Thomas,
+
+Your file starts with an array ([ ... ]) where each element contains a personId and a nested array called employments.
+
+When the data source is configured with Data array name = employments, Corporater doesn’t find it because the root is an array, not an object.
+That’s why you get empty results.
+
+Set the data array path to: $[*].employments
+Update the field reference for personId to: parent.personId instead of root.personId.
+
+That will flatten the data as expected — one row per employment — and include the personId from the higher level.
+json_plan.png
+
+Best regards,
+
+Marius N.
+Thomas Øderud 
+October 8, 2025 at 12:25 PM
+employments.csv
+08 Oct 2025, 01:25 PM
+SLAs
+-1h 49m
+Time to response
+348h 43m
+Time to resolution
+Customer
+Customer details
+Thomas Øderud
+Organization details
+Kristiansand - Kommune
+Details
+Knowledge base
+No related articles
+Request participants
+None
+Priority
+Normal
+Assignee
+Marius Nicolae
+Reporter
+Thomas Øderud
+Reporter's Name
+Thomas Øderud, thomas.oderud@kristiansand.kommune.no
+Organizations
+Kristiansand - Kommune
+Request Type
+New ticket
+Ticket subject
+API
+JSON
+Labels
+SupportGlobal
+SupportProduct
+SupportTechnical
+Status Time Free
+Open Status Time Free
+More fields
+Reopen Date, Due date, Parent, External Participant, Affects versions, Account Manager, Deployment Type, License Activation Status, Team
+Automation
+Rule executions
+Created October 8, 2025 at 12:25 PM
+Updated October 14, 2025 at 8:58 AM
+employments.csv
+csv · 8 KB
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+[ {
+  "personId" : "500001",
+  "employments" : [ {
+    "allocationPercentage" : 77.0,
+    "attributeId" : "3300",
+    "bflag" : 0,
+    "companyId" : "K1",
+    "customPercentage" : 100.0,
+    "dimValue" : "",
+    "employmentDescription" : "",
+    "employmentEndDate" : "2025-08-17T00:00:00.000Z",
+    "employmentId" : 12754,
+    "employmentStartDate" : "2025-06-30T00:00:00.000Z",
+    "employmentStatus" : "N",
+    "employmentType" : "Z",
+    "employmentUpdatedAt" : "2025-08-28T13:37:38.000Z",
+    "isMainPosition" : false,
+    "lastAdvancementDate" : "2025-12-31T00:00:00.000Z",
+    "payAdjustmentReasonCode" : "",
+    "payScale" : "4.2",
+    "payScaleAlternative" : 1,
+    "payStep" : "522600",
+    "personId" : "500001",
+    "positionCodeId" : "667500",
+    "positionId" : "3002",
+    "seniorityDate" : "2024-09-01T00:00:00.000Z",
+    "sorting" : 2,
+    "updatedBy" : "SYSINT",
+    "workSchedule" : "35,5"
+  }, {
+    "allocationPercentage" : 0.0,
+    "attributeId" : "3300",
+    "bflag" : 0,
+    "companyId" : "K1",
+    "customPercentage" : 100.0,
+    "dimValue" : "",
+    "employmentDescription" : "",
+    "employmentEndDate" : "2025-12-31T00:00:00.000Z",
+    "employmentId" : 12791,
+    "employmentStartDate" : "2025-01-01T00:00:00.000Z",
+    "employmentStatus" : "N",
+    "employmentType" : "Z",
+    "employmentUpdatedAt" : "2025-09-10T08:09:45.000Z",
+    "isMainPosition" : true,
+    "lastAdvancementDate" : "2025-12-31T00:00:00.000Z",
+employments.csv
