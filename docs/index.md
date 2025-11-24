@@ -10,6 +10,6 @@ Welcome! This is the official documentation for the Weather CI/CD Pipeline.
 ## 📚 Documentation
 - [Architecture](pages/architecture.md)
 - [Pipeline](pages/pipeline.md)
-- [Ngrok](ngrok.md)
+- [Ngrok](ngrok_purpose.md)
 
 ![Logo](assets/logo.png)
