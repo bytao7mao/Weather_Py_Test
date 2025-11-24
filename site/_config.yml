@@ -1,5 +1,10 @@
-
-theme: minima
-markdown: kramdown
 title: Weather Automation Pipeline
-description: Automated Weather CI System Documentation
+description: Automated Weather CI/CD Documentation
+theme: jekyll-theme-cayman
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+plugins:
+  - jekyll-include-cache
