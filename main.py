@@ -8,10 +8,14 @@ from email.mime.text import MIMEText
 
 # CONSTANTS
 import os
+API_KEY = os.environ.get("WEATHER_API_KEY")
+EMAIL_ADDRESS = os.environ.get("GMAIL_USERNAME")
+EMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")
+gmailAppPassword = os.environ.get("gmailAppPassword") #jenkins
+RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com
+LOCATION = 'BUCHAREST'
+PORT = 465
 
-gmail_sender = os.environ.get("GMAIL_USERNAME")
-gmail_password = os.environ.get("GMAIL_PASSWORD")
-api_key = os.environ.get("WEATHER_API_KEY")
 
 
 
