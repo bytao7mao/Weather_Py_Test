@@ -7,15 +7,12 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # CONSTANTS
-API_KEY = '48ebea5a0b5c48637b05be3e27ea0d91'
-EMAIL_ADDRESS = 'marius.tao@gmail.com'
-EMAIL_PASSWORD = 'Blader888_steelseries'
-RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com'
-LOCATION = 'BUCHAREST'
-PORT = 465
+import os
 
-gmailAppPassword = 'iall iibf afeg jrkr' #jenkins
-# gmailAppPassword = 'fhlf ywof dysu xqcj' #BMP
+gmail_sender = os.environ.get("GMAIL_USERNAME")
+gmail_password = os.environ.get("GMAIL_PASSWORD")
+api_key = os.environ.get("WEATHER_API_KEY")
+
 
 
 # def fetch_weather(api_key, location):
