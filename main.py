@@ -14,8 +14,8 @@ RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com'
 LOCATION = 'BUCHAREST'
 PORT = 465
 
-gmailAppPassword = 'iall iibf afeg jrkr' #weather
-# gmailAppPassword - 'fhlf ywof dysu xqcj' #BMP
+gmailAppPassword = 'iall iibf afeg jrkr' #jenkins
+# gmailAppPassword = 'fhlf ywof dysu xqcj' #BMP
 
 
 # def fetch_weather(api_key, location):
