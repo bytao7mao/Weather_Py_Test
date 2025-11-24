@@ -15,7 +15,7 @@ LOCATION = 'BUCHAREST'
 PORT = 465
 
 gmailAppPassword = 'iall iibf afeg jrkr' #weather
-gmailAppPassword - 'fhlf ywof dysu xqcj' #BMP
+# gmailAppPassword - 'fhlf ywof dysu xqcj' #BMP
 
 
 # def fetch_weather(api_key, location):
