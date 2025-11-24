@@ -1,0 +1,8 @@
+title: Weather Automation Pipeline
+description: Automated Weather CI/CD Documentation
+theme: jekyll-theme-cayman
+markdown: kramdown
+kramdown:
+  input: GFM
+plugins:
+  - jekyll-include-cache
