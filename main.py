@@ -12,7 +12,7 @@ API_KEY = os.environ.get("WEATHER_API_KEY")
 EMAIL_ADDRESS = os.environ.get("GMAIL_USERNAME")
 EMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")
 gmailAppPassword = os.environ.get("gmailAppPassword") #jenkins
-RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com
+RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com'
 LOCATION = 'BUCHAREST'
 PORT = 465
 
