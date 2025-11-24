@@ -11,5 +11,6 @@ Welcome! This is the official documentation for the Weather CI/CD Pipeline.
 - [Architecture](pages/architecture.md)
 - [Pipeline](pages/pipeline.md)
 - [Ngrok](ngrok_purpose.md)
+- [SSH explanation usage](ssh.md)
 
 ![Logo](assets/logo.png)
