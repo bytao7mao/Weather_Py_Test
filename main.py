@@ -66,7 +66,7 @@ def send_email(city, degrees):
     context = ssl.create_default_context()
 
     with smtplib.SMTP_SSL("smtp.gmail.com", PORT, context=context) as server:
-        server.login(EMAIL_ADDRESS, gmailAppPassword)
+        server.login(EMAIL_ADDRESS, GMAIL_APP_PASSWORD)
         server.sendmail(EMAIL_ADDRESS, RECIPIENT_EMAIL, message.as_string())
 
     print("Email sent!")
