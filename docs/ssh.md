@@ -9,7 +9,7 @@ secure than passwords.
 # 🖼️ Diagram 1 --- SSH Keys & How They Work
 
 ![SSH Keys
-Diagram](/mnt/data/A_two-section_digital_informational_diagram_provid.png)
+Diagram](ssh_diagram1.png)
 
 This diagram shows:
 
@@ -22,7 +22,7 @@ This diagram shows:
 # 🖼️ Diagram 2 --- Key Pair Generation & GitHub Authentication
 
 ![SSH GitHub Auth
-Diagram](/mnt/data/A_two-part_digital_infographic_illustrates_how_SSH.png)
+Diagram](ssh_diagram2.png)
 
 This diagram shows:
 
