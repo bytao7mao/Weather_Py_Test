@@ -1,0 +1,5 @@
+
+theme: minima
+markdown: kramdown
+title: Weather Automation Pipeline
+description: Automated Weather CI System Documentation
