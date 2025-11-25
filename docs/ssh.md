@@ -87,5 +87,125 @@ ssh-add ~/.ssh/id_ed25519
 
 ------------------------------------------------------------------------
 
-If you'd like, I can also: - Generate a **PDF version** - Create **new
-diagrams** - Add this to your GitHub documentation
+# 🔐 GitHub SSH Setup Guide
+
+This guide explains the exact steps you followed to configure SSH
+authentication for GitHub on CentOS/Ubuntu.\
+You can save this as documentation for future setups.
+
+------------------------------------------------------------------------
+
+# 🔐 GitHub SSH Setup Guide
+
+Use this if you want to connect to GitHub from CentOS/Ubuntu using SSH instead of HTTPS
+
+## 1️⃣ Check for Existing SSH Keys
+
+Before creating a new SSH key, check whether one already exists:
+
+``` bash
+ls -al ~/.ssh
+```
+
+You were looking for:
+
+-   `id_rsa`
+-   `id_rsa.pub`
+
+------------------------------------------------------------------------
+
+## 2️⃣ Generate a New SSH Key
+
+You generated a fresh SSH key using:
+
+``` bash
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+```
+
+When prompted:
+
+-   Press **Enter** to accept the default file location
+    (`/root/.ssh/id_rsa`)
+-   Press **Enter** again to skip adding a passphrase (optional)
+
+This created:
+
+-   `~/.ssh/id_rsa` → **Private key**
+-   `~/.ssh/id_rsa.pub` → **Public key**
+
+------------------------------------------------------------------------
+
+## 3️⃣ Start the SSH Agent
+
+Enable the SSH agent:
+
+``` bash
+eval "$(ssh-agent -s)"
+```
+
+Add your private key to it:
+
+``` bash
+ssh-add ~/.ssh/id_rsa
+```
+
+------------------------------------------------------------------------
+
+## 4️⃣ Copy Your Public Key
+
+Display the SSH public key:
+
+``` bash
+cat ~/.ssh/id_rsa.pub
+```
+
+Copy the entire output (the line beginning with `ssh-rsa`).
+
+------------------------------------------------------------------------
+
+## 5️⃣ Add the Key to GitHub
+
+Go to:
+
+**GitHub → Settings → SSH and GPG Keys → New SSH Key**
+
+Then paste the contents of your `id_rsa.pub` file.
+
+------------------------------------------------------------------------
+
+## 6️⃣ Test SSH Connection to GitHub
+
+Verify that your SSH key works:
+
+``` bash
+ssh -T git@github.com
+```
+
+Expected response:
+
+    Hi <username>! You've successfully authenticated, but GitHub does not provide shell access.
+
+This confirms that GitHub accepts your key.
+
+------------------------------------------------------------------------
+
+## 7️⃣ Use SSH for Git Operations
+
+### Cloning using SSH:
+
+``` bash
+git clone git@github.com:username/repo.git
+```
+
+### If you already cloned using HTTPS, change the remote:
+
+``` bash
+git remote set-url origin git@github.com:username/repo.git
+```
+
+------------------------------------------------------------------------
+
+## 🎉 You're Ready!
+
+Your system is now fully configured to push, pull, and interact with
+GitHub using secure SSH authentication --- no passwords required.
