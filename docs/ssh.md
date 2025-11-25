@@ -93,19 +93,16 @@ This guide explains the exact steps you followed to configure SSH
 authentication for GitHub on CentOS/Ubuntu.\
 You can save this as documentation for future setups.
 
-------------------------------------------------------------------------
-
-# 🔐 GitHub SSH Setup Guide
-
 Use this if you want to connect to GitHub from CentOS/Ubuntu using SSH instead of HTTPS
+------------------------------------------------------------------------
 
 ## 1️⃣ Check for Existing SSH Keys
 
 Before creating a new SSH key, check whether one already exists:
 
 ``` bash
-ls -al ~/.ssh
 ```
+ls -al ~/.ssh
 
 You were looking for:
 
