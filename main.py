@@ -1,109 +1,130 @@
-import smtplib, ssl
-
+import os
+import smtplib
+import ssl
+import logging
 import requests
-import socket
-from smtplib import SMTP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# CONSTANTS
-import os
-API_KEY = os.environ.get("WEATHER_API_KEY")
-EMAIL_ADDRESS = os.environ.get("GMAIL_USERNAME")
-EMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")
-GMAIL_APP_PASSWORD = os.environ.get("gmailAppPassword") #jenkins
-RECIPIENT_EMAIL = 'marius.a.nicolae@outlook.com'
-LOCATION = 'BUCHAREST'
-PORT = 465
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+def get_env_variable(var_name, default=None, required=True):
+    value = os.environ.get(var_name, default)
+    if required and not value:
+        raise ValueError(f"Environment variable {var_name} is required but not set.")
+    return value
 
+def fetch_weather(api_key, location):
+    """
+    Fetch weather data from OpenWeatherMap API.
+    """
+    url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Error fetching weather data: {e}")
+        return None
 
+def compose_email_parts(weather_data, location):
+    """
+    Compose plain text and HTML email parts from weather data.
+    """
+    if not weather_data:
+        return None, None
 
-# def fetch_weather(api_key, location):
-#     base_url = f"http://api.openweathermap.org/data/2.5/weather?q={location}&appid={api_key}&units=metric"
-#     response = requests.get(base_url)
-#     return response.json()
-#
-#
-# def compose_email(weather_data):
-#     weather = weather_data['weather'][0]['main']
-#     temp = weather_data['main']['temp']
-#     advice = "It's a warm day, consider wearing light clothes." if temp > 20 else "It might be chilly, consider wearing a jacket."
-#     message = f"Good morning! Today's weather in {LOCATION}: {weather}, {temp}°C. {advice}"
-#     return message
-#
-#
-def send_email(city, degrees):
-    message = MIMEMultipart("alternative")
-    message["Subject"] = "Weather news from tao !"
-    message["From"] = EMAIL_ADDRESS
-    message["To"] = RECIPIENT_EMAIL
+    city = weather_data.get('name', location)
+    temp = weather_data['main']['temp']
+    description = weather_data['weather'][0]['description']
 
-    # Create the plain-text and HTML version of your message
-    text = """\
+    text = f"""\
     Hi,
-    How are you?
-    Marius Nicolae has great Linkedin Profile:
-    https://www.linkedin.com/in/nicolae-marius-37b344144/"""
+    In {city} the weather is: {temp} °C
+    Description: {description}
+    """
+
     html = f"""\
     <html>
       <body>
         <p>Hi,<br>
-           In {city} The Weather is: {degrees} '°C'
+           In {city} the weather is: {temp} °C<br>
+           Description: {description}
         </p>
       </body>
     </html>
     """
+    return text, html
 
-    # Turn these into plain/html MIMEText objects
-    # part1 = MIMEText(text, "plain")
-    part2 = MIMEText(html, "html")
+def send_email(subject, text_content, html_content, email_address, app_password, recipient_email):
+    """
+    Send an email using Gmail SMTP.
+    """
+    if not html_content and not text_content:
+        logging.warning("No content to send.")
+        return
 
-    # Add HTML/plain-text parts to MIMEMultipart message
-    # The email client will try to render the last part first
-    # message.attach(part1)
-    message.attach(part2)
+    message = MIMEMultipart("alternative")
+    message["Subject"] = subject
+    message["From"] = email_address
+    message["To"] = recipient_email
+
+    # Attach plain text and HTML parts
+    if text_content:
+        part1 = MIMEText(text_content, "plain")
+        message.attach(part1)
+    if html_content:
+        part2 = MIMEText(html_content, "html")
+        message.attach(part2)
+
     context = ssl.create_default_context()
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 465
 
-    with smtplib.SMTP_SSL("smtp.gmail.com", PORT, context=context) as server:
-        server.login(EMAIL_ADDRESS, GMAIL_APP_PASSWORD)
-        server.sendmail(EMAIL_ADDRESS, RECIPIENT_EMAIL, message.as_string())
-
-    print("Email sent!")
-
+    try:
+        with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
+            server.login(email_address, app_password)
+            server.sendmail(email_address, recipient_email, message.as_string())
+        logging.info("Email sent successfully!")
+    except Exception as e:
+        logging.error(f"Failed to send email: {e}")
 
 def main():
-    # var = socket.getaddrinfo('localhost', 8080)
-    # print(var)
-    # weather_data = fetch_weather(API_KEY, LOCATION)
-    # email_body = compose_email(weather_data)
-    # send_email("Today's Weather Alert", email_body)
+    try:
+        api_key = get_env_variable("WEATHER_API_KEY")
+        email_address = get_env_variable("GMAIL_USERNAME")
+        gmail_app_password = get_env_variable("gmailAppPassword")
+        recipient_email = get_env_variable("RECIPIENT_EMAIL", 'marius.a.nicolae@outlook.com', required=False)
+        location = get_env_variable("WEATHER_LOCATION", 'BUCHAREST', required=False)
+    except ValueError as e:
+        logging.error(e)
+        return
 
-    # city = input("Enter City:")
-    # url = 'http://api.openweathermap.org/data/2.5/weather?q={}&appid={}&units=metric'.format(city, api_key)
-    url2 = f"http://api.openweathermap.org/data/2.5/weather?q={LOCATION}&appid={API_KEY}&units=metric"
+    logging.info(f"Fetching weather for {location}...")
+    weather_data = fetch_weather(api_key, location)
 
-    res = requests.get(url2)
-    data = res.json()
+    if weather_data:
+        # Log weather details
+        try:
+            temp = weather_data['main']['temp']
+            wind = weather_data['wind']['speed']
+            pressure = weather_data['main']['pressure']
+            humidity = weather_data['main']['humidity']
+            description = weather_data['weather'][0]['description']
 
-    humidity = data['main']['humidity']
-    pressure = data['main']['pressure']
-    wind = data['wind']['speed']
-    description = data['weather'][0]['description']
-    # temp: int = data['main']['temp']
-    temp = int(data['main']['temp'])
+            logging.info(f"Temperature: {temp} °C")
+            logging.info(f"Wind: {wind}")
+            logging.info(f"Pressure: {pressure}")
+            logging.info(f"Humidity: {humidity}")
+            logging.info(f"Description: {description}")
+        except KeyError as e:
+            logging.warning(f"Missing data in weather response: {e}")
 
-    print('Temperature:', temp, '°C')
-    print('Wind:', wind)
-    print('Pressure: ', pressure)
-    print('Humidity: ', humidity)
-    print('Description:', description)
-
-    body = 'Temperature:  ' + str(temp)
-    subject = "Weather news!"
-
-    send_email(LOCATION, temp)
-
+        text_body, html_body = compose_email_parts(weather_data, location)
+        send_email("Weather news from tao!", text_body, html_body, email_address, gmail_app_password, recipient_email)
+    else:
+        logging.error("Could not fetch weather data. Aborting.")
 
 if __name__ == "__main__":
     main()
